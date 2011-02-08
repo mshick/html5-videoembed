@@ -117,6 +117,10 @@
             pause: function() {
                 v.videoPause();
             },
+            
+            lastsecond: function() {
+              v.fireEvent('lastsecond');
+            },
 
             play: function(i) {
                 if (typeof i != 'undefined') {
@@ -233,7 +237,8 @@
             }
             v.htmlObj.playDiv.addEventListener("click", v.firstplayHandler(), false);
             extend(v.events, {
-                firstplay: 'onFirstPlay'
+                firstplay: 'onFirstPlay',
+                lastsecond: 'onLastSecond'
             });
 
             return true;
@@ -279,6 +284,7 @@
                     if (v.inter === 0) {
                         v.fireEvent(event.type, opt);
                     } else {
+                        v.fireEvent(event.type, 'afterInter');
                         v.inter--;
                     }
 
@@ -307,6 +313,7 @@
 
         playHandler: function() {
             return function(event) {
+                v.lastsecondHandler();
                 v.fireEvent(event.type);
             }
         },
@@ -349,8 +356,20 @@
             }
         },
 
+        lastsecond: function() {
+            var t = (Math.floor(v.videoObj.video.currentTime - 1)) * 1000;
+            setTimeout("window.videoembed.lastsecond()", t);
+        },
+
+        lastsecondHandler: function() {
+            return function(event) {
+                v.fireEvent('lastsecond');
+            }        
+        },
+
         fireEvent: function(event, opt1) {
             if (typeof window.videoplayer == 'object' && typeof window.videoplayer.fireEvent == 'function') {
+                console.log(event);
                 // don't want to report -1 if an ad is playing
                 var counter = (p.playlistCounter >= 0) ? p.playlistCounter : 0;
                 // externally index begins as 1

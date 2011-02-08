@@ -90,11 +90,12 @@ function lrDisplayAd(t)
     lrAdQ3 = false;
     
     if(typeof(lrOnAdStart)=="function") lrOnAdStart();
-    
+    console.log('prepause');
     lrVideoContainer.pause();
     lrVideoContainer.src = lrAdObject.linear.mediafiles[0].url;
     lrVideoContainer.controls = false;
     lrVideoContainer.onclick = function() { window.open(lrAdObject.linear.clickthrough); for(i in lrAdObject.linear.clicktracking) lrTracker(lrAdObject.linear.clicktracking[i]); };
+    console.log(lrVideoContainer);
     lrVideoContainer.load();
     lrVideoContainer.play();
     for(var c in lrAdObject.companionads) { lrDisplayCompanion(lrAdObject.companionads[c].width+"x"+lrAdObject.companionads[c].height, lrAdObject.companionads[c].resourceType=="static" ? "image" : "iframe", lrAdObject.companionads[c].url, lrAdObject.companionads[c].clickthrough, new Array()); }

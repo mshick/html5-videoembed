@@ -11,9 +11,14 @@
       width: 640px;
       position: relative;
     }
+
+    #videoembed-playlist {
+      height: 40px;
+    }
     
     #videoembed-playlist li {
       display: inline;
+      background-color: #fff;
     }
   </style>
      
@@ -47,6 +52,8 @@
     vids = vids.join('%252C')
 
     function init() {
+      adCall('pre');
+
       var height = 360;
       var width = 640;
 
@@ -108,13 +115,16 @@
           break; 
                 
         case 'onBegin':
-          if (opt1 != 'firstPlay') {
+          if (opt1 != 'firstPlay' && opt1 != 'afterInter') {
             console.log('Pre ad call');
           }
           break;
  
         case 'onFinish':
           console.log('Post ad call');
+          adCall('post');
+          videoEmbedApi.inter();
+          lrDisplayAd(0);
           break;
       }
     }
@@ -129,6 +139,22 @@
         }
       }
       return browser;
+    }
+    
+    function adCall(position) {
+        var pos;
+        switch(position) {
+          case 'pre':
+            pos = 'in::0';
+            break;
+          case 'post':
+            pos = 'in::100';
+            break;
+        }
+        var s = document.createElement('script');
+        s.setAttribute("type","text/javascript");
+        s.setAttribute("src", 'http://ad3.liverail.com/?LR_PUBLISHER_ID=1562&LR_SCHEMA=jsonp&LR_ADMAP=' + pos + '&LR_FORMAT=video/mp4&LR_TAGS=demo');
+        document.getElementsByTagName("head")[0].appendChild(s)
     }
     
   </script>
@@ -149,16 +175,13 @@
         </div>
     </div>
 
-<style>
-  li { display: inline; }
-</style>
-<ul style="height:40px;" id="videoembed-playlist">
+<ul id="videoembed-playlist">
     <li class="playlist-item" rel="1"><a href="#"  >VIDEO 1</a></li>  
     <li class="playlist-item" rel="2"><a href="#"  >VIDEO 2</a></li>
     <li class="playlist-item" rel="3"><a href="#"  >VIDEO 3</a></li>
     <li class="playlist-item" rel="4"><a href="#"  >VIDEO 4</a></li>
 </ul>          
-    <script language="javascript" src="http://ad3.liverail.com/?LR_PUBLISHER_ID=1562&LR_SCHEMA=jsonp&LR_ADMAP=in::0&LR_FORMAT=video/mp4&LR_TAGS=demo"></script>
+<!--     <script language="javascript" src="http://ad3.liverail.com/?LR_PUBLISHER_ID=1562&LR_SCHEMA=jsonp&LR_ADMAP=in::0;in::100&LR_FORMAT=video/mp4&LR_TAGS=demo"></script> -->
      
 	</body>
 </html>
