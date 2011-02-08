@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    #embed-holder {
+      height: 360px;
+      width: 640px;
+      position: relative;
+    }
+    
+    #videoembed-playlist li {
+      display: inline;
+    }
+  </style>
+     
+  <script type="text/javascript" src="contrib/toolbox.flashembed.min.js"></script>
+  <script type="text/javascript" src="videoembed.js"></script>
+  
+  <script language="JavaScript">
+/*
+    var vid = '5226180bd9e81,381578b7743d8,0df1c49eb9a56,ff5b0601a1e97';
+    var vids = vid.split(',');
+*/
+
+    var videosArr = [
+              "http://video.fastcompany.com/videos/5226180bd9e81/formats/podcast_default/play.mp4", 
+              "http://video.fastcompany.com/videos/381578b7743d8/formats/podcast_default/play.mp4", 
+              "http://video.fastcompany.com/videos/0df1c49eb9a56/formats/podcast_default/play.mp4", 
+              "http://video.fastcompany.com/videos/ff5b0601a1e97/formats/podcast_default/play.mp4"
+    ];
+    
+    var postersArr = [
+              "http://video.fastcompany.com/videos/5226180bd9e81/screenshots/640w.jpg", 
+              "http://video.fastcompany.com/videos/381578b7743d8/screenshots/640w.jpg", 
+              "http://video.fastcompany.com/videos/0df1c49eb9a56/screenshots/640w.jpg", 
+              "http://video.fastcompany.com/videos/ff5b0601a1e97/screenshots/640w.jpg"
+    ];
+
+    var vids = [];
+    for (var i in videosArr) {
+      vids[i] = videosArr[i].match(/^.*videos\/(.*?)\//)[1];
+    }
+    vids = vids.join('%252C')
+
+    function init() {
+      var height = 360;
+      var width = 640;
+
+      var browser = browserDetect();
+      if(browser.Platform.name == 'ios' || browser.Platform.name == 'android'){
+      
+        window.videoplayer = {};
+        videoplayer.fireEvent = function(objectId, event, obj1, opt1) {
+            playerEvent(objectId, event, obj1, opt1);
+        }
+        
+        window.videoEmbedApi = videoembed("#video-player", {
+          src: videosArr,
+          poster: postersArr,
+          controls: true, 
+          autoplay: false, 
+          classes: 'video-stream',
+          id: 'video',
+          playlistContainerId: 'videoembed-playlist',
+          playlistItemsClass: 'playlist-item'
+        }); 
+        
+        var playerClass = document.getElementById("video-player").className;
+        document.getElementById("video-player").className = playerClass + ' thumbnail-mode html5-native-controls';
+        document.getElementById("video-player").style.display = 'block';
+
+        lrJSONHandle(lrAdObject, 'video');
+      }
+      else {
+        window.flowplayer = {};
+        flowplayer.fireEvent = function(objectId, event, obj1) {
+            playerEvent(objectId, event, obj1);
+        }
+      
+        var flash = flashembed("#watch-player-div", {
+            src: "http://service.twistage.com/plugins/player.swf", 
+            w3c: true, 
+            wmode: 'transparent', 
+            base: 'http://service.twistage.com',
+            width: width,
+            height: height
+          }, 
+          {
+          	feed: 'http%3A%2F%2Fservice.twistage.com%2Fcompanies%2Fmansueto-digital%2Fvideos.rss%3Fids%3D' + vids + '%26verbosity%3Dlow',
+            p: '30secondmba_playlist',
+          }
+        );
+      }
+    };
+    
+    document.addEventListener("DOMContentLoaded", init, false);
+    
+    function playerEvent(objectId, event, index, opt1) {
+      switch (event) {
+        case 'onFirstPlay':
+          console.log('First ad call');
+          videoEmbedApi.inter();
+          lrDisplayAd(0);        
+          break; 
+                
+        case 'onBegin':
+          if (opt1 != 'firstPlay') {
+            console.log('Pre ad call');
+          }
+          break;
+ 
+        case 'onFinish':
+          console.log('Post ad call');
+          break;
+      }
+    }
+
+    function browserDetect() {
+      var h = navigator.userAgent.toLowerCase().match(/(opera|ie|firefox|chrome|version)[\s\/:]([\w\d\.]+)?.*?(safari|version[\s\/:]([\w\d\.]+)|$)/) || [null, "unknown", 0];
+      var browser = {
+        name: h[1] == "version" ? h[3] : h[1],
+        version: h[1] == "ie" && this.document.documentMode || parseFloat(h[1] == "opera" && h[4] ? h[4] : h[2]),
+        Platform: {
+          name: navigator.userAgent.toLowerCase().match(/ip(?:ad|od|hone)/) ? "ios" : (navigator.userAgent.toLowerCase().match(/(?:webos|android)/) || navigator.platform.toLowerCase().match(/mac|win|linux/) || ["other"])[0]
+        }
+      }
+      return browser;
+    }
+    
+  </script>
+
+	</head>
+	<body>
+
+    <script language="javascript" src="contrib/liverail.js"></script>
+
+    <div id="embed-holder" style="height:360px;position:relative">
+        <div id="watch-player-div" class="flash-player full-frame"></div>
+
+        <div id="video-player" class="html5-video-player" tabindex="0" style="display:none;">
+            <div class="video-fallback" style="display: none;">
+                Your browser does not currently recognize any of the video formats available.<br>
+                <a href="/html5">Click here to visit our frequently asked questions about HTML5 video.</a>
+            </div>
+        </div>
+    </div>
+
+<style>
+  li { display: inline; }
+</style>
+<ul style="height:40px;" id="videoembed-playlist">
+    <li class="playlist-item" rel="1"><a href="#"  >VIDEO 1</a></li>  
+    <li class="playlist-item" rel="2"><a href="#"  >VIDEO 2</a></li>
+    <li class="playlist-item" rel="3"><a href="#"  >VIDEO 3</a></li>
+    <li class="playlist-item" rel="4"><a href="#"  >VIDEO 4</a></li>
+</ul>          
+    <script language="javascript" src="http://ad3.liverail.com/?LR_PUBLISHER_ID=1562&LR_SCHEMA=jsonp&LR_ADMAP=in::0&LR_FORMAT=video/mp4&LR_TAGS=demo"></script>
+     
+	</body>
+</html>

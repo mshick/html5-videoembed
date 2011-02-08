@@ -1,0 +1,164 @@
+body {
+font:12px Arial,sans-serif;
+background-color:#000;
+color:#fff;
+height:100%;
+width:100%;
+overflow:hidden;
+margin:0;
+}
+
+.full-frame {
+position:absolute;
+width:100%;
+height:100%;
+}
+
+h1 {
+text-align:center;
+color:#fff;
+}
+
+.html5-video-player {
+box-sizing:border-box;
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+-ms-box-sizing:border-box;
+width:100%;
+height:100%;
+background-color:#FFF;
+z-index:900;
+-webkit-user-select:none;
+-moz-user-select:none;
+user-select:none;
+cursor:pointer;
+}
+
+.html5-fullscreen .html5-video-player {
+position:fixed;
+top:0;
+bottom:0;
+left:0;
+right:0;
+}
+
+body.html5-fullscreen {
+overflow:hidden;
+}
+
+.video-content {
+background-color:#000;
+position:absolute;
+top:0;
+bottom:30px;
+left:0;
+right:0;
+}
+
+.html5-autohide .video-content,.html5-native-controls .video-content {
+bottom:0;
+}
+
+.video-content.loading {
+background:#000 no-repeat scroll center center;
+}
+
+.html5-video-player.thumbnail-mode .video-stream {
+width:1px;
+height:1px;
+}
+
+.html5-video-player .video-stream {
+display:block;
+position:absolute;
+top:0;
+left:0;
+}
+
+.html5-video-player .video-stream,.html5-video-player .video-thumbnail,.html5-video-player .video-snapshot {
+width:100%;
+height:100%;
+}
+
+.html5-video-player .video-snapshot {
+display:block;
+position:absolute;
+top:0;
+left:0;
+z-index:901;
+}
+
+.html5-video-player .video-fallback {
+background-color:#000;
+font-family:sans-serif;
+font-size:14px;
+line-height:20px;
+color:#FFF;
+text-align:center;
+position:absolute;
+z-index:911;
+width:640px;
+padding-top:160px;
+height:200px;
+}
+
+.video-controls {
+height:29px;
+position:absolute;
+width:100%;
+bottom:0;
+z-index:912;
+}
+
+.html5-autohide .video-controls {
+height:209px;
+overflow:hidden;
+}
+
+.html5-overlay-button-background {
+	-moz-transition: opacity .25s linear;
+	-webkit-transition: opacity .25s linear;
+	-o-transition: opacity .25s linear;
+}
+
+.html5-video-player:hover .html5-overlay-button-background {
+	opacity: 1;
+}
+
+.html5-center-overlay {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.thumbnail-mode .html5-big-play-button {
+	display: block;
+	width: 96px;
+	height: 96px;
+	margin-left: -48px;
+	margin-top: -48px;
+  opacity:0.4;
+}
+
+.thumbnail-mode .loading .html5-big-play-button {
+	display: none;
+}
+
+.html5-mobile-big-play-button {
+	background-image: url(http://console.twistage.com:80/images/icons/silver_watch2.png);
+	background-repeat: no-repeat;
+}
+
+.video-overlays {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1500;
+  height: 100px;
+  width: 100px;
+}
+
+#itunes-overlay {
+  background: red;
+}
