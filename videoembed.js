@@ -368,8 +368,7 @@
         },
 
         fireEvent: function(event, opt1) {
-            if (typeof window.videoplayer == 'object' && typeof window.videoplayer.fireEvent == 'function') {
-                console.log(event);
+            if (typeof window.videoplayer == 'object' && typeof window.videoplayer.fireEvent == 'function') {fconso
                 // don't want to report -1 if an ad is playing
                 var counter = (p.playlistCounter >= 0) ? p.playlistCounter : 0;
                 // externally index begins as 1

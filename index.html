@@ -21,7 +21,7 @@
       background-color: #fff;
     }
   </style>
-     
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>   
   <script type="text/javascript" src="contrib/toolbox.flashembed.min.js"></script>
   <script type="text/javascript" src="videoembed.js"></script>
   
@@ -32,10 +32,10 @@
 */
 
     var videosArr = [
-              "http://video.fastcompany.com/videos/5226180bd9e81/formats/podcast_default/play.mp4", 
-              "http://video.fastcompany.com/videos/381578b7743d8/formats/podcast_default/play.mp4", 
-              "http://video.fastcompany.com/videos/0df1c49eb9a56/formats/podcast_default/play.mp4", 
-              "http://video.fastcompany.com/videos/ff5b0601a1e97/formats/podcast_default/play.mp4"
+              "http://video.fastcompany.com/videos/5226180bd9e81/formats/web_medium/play.mp4", 
+              "http://video.fastcompany.com/videos/381578b7743d8/formats/web_medium/play.mp4", 
+              "http://video.fastcompany.com/videos/0df1c49eb9a56/formats/web_medium/play.mp4", 
+              "http://video.fastcompany.com/videos/ff5b0601a1e97/formats/web_medium/play.mp4"
     ];
     
     var postersArr = [
@@ -52,7 +52,7 @@
     vids = vids.join('%252C')
 
     function init() {
-      adCall('pre');
+/*       adCall('pre'); */
 
       var height = 360;
       var width = 640;
@@ -80,7 +80,7 @@
         document.getElementById("video-player").className = playerClass + ' thumbnail-mode html5-native-controls';
         document.getElementById("video-player").style.display = 'block';
 
-        lrJSONHandle(lrAdObject, 'video');
+/*         lrJSONHandle(lrAdObject, 'video'); */
       }
       else {
         window.flowplayer = {};
@@ -89,6 +89,7 @@
         }
       
         var flash = flashembed("#watch-player-div", {
+            id: 'flash-player',
             src: "http://service.twistage.com/plugins/player.swf", 
             w3c: true, 
             wmode: 'transparent', 
@@ -101,6 +102,13 @@
             p: '30secondmba_playlist',
           }
         );
+    
+      $('#videoembed-playlist > li').click(function() {
+        var index = parseInt($(this).attr('rel'));
+        document.getElementById("flash-player").fp_play(index);
+        return false;
+      });
+
       }
     };
     
@@ -109,22 +117,24 @@
     function playerEvent(objectId, event, index, opt1) {
       switch (event) {
         case 'onFirstPlay':
-          console.log('First ad call');
-          videoEmbedApi.inter();
-          lrDisplayAd(0);        
+/*           console.log('First ad call'); */
+/*           videoEmbedApi.inter(); */
+/*           lrDisplayAd(0);         */
           break; 
                 
         case 'onBegin':
           if (opt1 != 'firstPlay' && opt1 != 'afterInter') {
-            console.log('Pre ad call');
+/*             console.log('Pre ad call'); */
           }
           break;
  
         case 'onFinish':
+/*
           console.log('Post ad call');
           adCall('post');
           videoEmbedApi.inter();
           lrDisplayAd(0);
+*/
           break;
       }
     }
